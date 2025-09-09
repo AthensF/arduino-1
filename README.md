@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1 align="center">AI on the Edge Device: Digitizing Your non-digital meters with an ESP32-CAM</h1>
 <br>
 <br>
@@ -679,3 +680,6 @@ There are some ideas and feature requests which are not currently being pursuedâ
         <img src="https://img.shields.io/badge/Back%20to%20Top-000000?style=for-the-badge&logo=github&logoColor=white" alt="Back to Top">
     </a>
 </div>
+=======
+# arduino-1
+>>>>>>> e557a9a7513ea44ab03fcbf5a7722b9ac87a969a
