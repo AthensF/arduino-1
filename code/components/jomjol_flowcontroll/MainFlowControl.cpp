@@ -29,6 +29,8 @@
 #include "psram.h"
 #include "basic_auth.h"
 
+#include "memfault/metrics/metrics.h"
+
 // support IDF 5.x
 #ifndef portTICK_RATE_MS
 #define portTICK_RATE_MS portTICK_PERIOD_MS
@@ -1717,6 +1719,11 @@ void task_autodoFlow(void *pvParameter)
 
         // WIFI Signal Strength (RSSI) -> Logfile
         LogFile.WriteToFile(ESP_LOG_DEBUG, TAG, "WIFI Signal (RSSI): " + std::to_string(get_WIFI_RSSI()) + "dBm");
+
+        // Memfault
+        MEMFAULT_METRIC_SET_SIGNED(recognition_time_seconds, getUpTime() - roundStartTime);
+        MEMFAULT_METRIC_SET_SIGNED(cpu_temp, temperatureRead());
+        MEMFAULT_METRIC_SET_SIGNED(wifi_rssi, get_WIFI_RSSI());
 
         // Check if time is synchronized (if NTP is configured)
         if (getUseNtp() && !getTimeIsSet())

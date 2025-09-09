@@ -18,5 +18,10 @@ if(EXISTS "${SDKCONFIG}.defaults")
     message(STATUS "-- Using defaults: ${SDKCONFIG_DEFAULTS}")
 endif()
 
+# set(MEMFAULT_FIRMWARE_SDK components/memfault-firmware-sdk)
+# include(${MEMFAULT_FIRMWARE_SDK}/ports/esp_idf/memfault.cmake)
+
+
+
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(AI-on-the-edge)

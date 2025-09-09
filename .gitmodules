@@ -13,3 +13,6 @@
 [submodule "code/components/esp-protocols"]
 	path = code/components/esp-protocols
 	url = https://github.com/espressif/esp-protocols.git
+[submodule "code/components/memfault-firmware-sdk"]
+	path = code/components/memfault-firmware-sdk
+	url = git@github.com:memfault/memfault-firmware-sdk.git

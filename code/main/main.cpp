@@ -42,6 +42,15 @@
 #include "statusled.h"
 #include "sdcard_check.h"
 
+#include "memfault/esp_port/core.h"
+// Memfault logging & assert macros and HTTP client post
+#include "memfault/core/platform/debug_log.h"
+#include "memfault/core/debug_log.h"
+#include "memfault/core/platform/debug_log.h"
+// #include "memfault/core/sdk_assert.h"
+#include "memfault/panics/assert.h"
+#include "memfault/esp_port/http_client.h"
+
 #include "../../include/defines.h"
 
 #ifdef ENABLE_SOFTAP
@@ -556,6 +565,25 @@ extern "C" void app_main(void)
     }
     else { // Any other error is critical and makes running the flow impossible. Init is going to abort.
         LogFile.WriteToFile(ESP_LOG_ERROR, TAG, "Initialization failed. Flow task start aborted. Loading reduced web interface...");
+    }
+    memfault_boot();
+    // need own thread
+    int counter = 0;
+
+
+    while (1) {
+        MEMFAULT_LOG_DEBUG("Memfault loop is running");
+        int rv = memfault_esp_port_http_client_post_data();
+        if (rv != 0){
+            MEMFAULT_LOG_ERROR("Memfault Post failed: %d", rv);
+        }
+
+        xDelay = 60000 / portTICK_PERIOD_MS;
+        vTaskDelay(xDelay);
+        if (counter++ > 10){
+            // MEMFAULT_SDK_ASSERT(0); // crashes the device every 5 hours, forces a reboot
+            MEMFAULT_ASSERT(0);
+        }
     }
 }
 
